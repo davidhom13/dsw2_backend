@@ -17,45 +17,41 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.proyecto.entidad.Producto;
-import com.proyecto.service.ProductoService;
+import com.proyecto.entidad.PartesPC;
+import com.proyecto.service.PartesPCService;
 import com.proyecto.util.AppSettings;
 
 @RestController
-@RequestMapping("url/crudProducto")
+@RequestMapping("url/crudPartesPC")
 @CrossOrigin(origins = AppSettings.URL_CROSS_ORIGIN)
-public class CrudProductoController {
-
-	@Autowired
-	private ProductoService productoService;
+public class CrudPartesPCController {
 	
-	@GetMapping("/listaProductoxNombre/{filtro}")
+	@Autowired
+	private PartesPCService service;
+	
+	@GetMapping
 	@ResponseBody
-	public ResponseEntity<List<Producto>> consulta(@PathVariable("filtro")String filtro){
-		List<Producto> salida = null;
-		try {
-			if (filtro.equals("todos")) {
-				salida = productoService.listaProductoPorNombre("%");
-			}else {
-				salida = productoService.listaProductoPorNombre("%"+filtro+"%");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return ResponseEntity.ok(salida);
+	public ResponseEntity<List<PartesPC>> listaPartesPC(){
+		return ResponseEntity.ok(service.listaPartes());
 	}
 	
-	@PostMapping("/registrarProducto")
+	@GetMapping("/listadoxTipo/{idtipo}")
 	@ResponseBody
-	public ResponseEntity<Map<String, Object>> registraProducto(@RequestBody Producto obj){
+	public ResponseEntity<List<PartesPC>> listaxTipo(@PathVariable("idtipo")int idtipo){
+		return ResponseEntity.ok(service.listaPartesPorTipo(idtipo));
+	}
+	
+	@PostMapping("/registroPartesPC")
+	@ResponseBody
+	public ResponseEntity<Map<String, Object>> registraPartesPC(@RequestBody PartesPC obj){
 		Map<String, Object> salida = new HashMap<>();
 		try {
-			obj.setIdProducto(0);
-			Producto objSalida = productoService.insertaActualizaProducto(obj);
+			obj.setId_partes(0);
+			PartesPC objSalida = service.insertaActualizaPartesPC(obj);
 			if (objSalida == null) {
-				salida.put("mensaje", "Error en el registro");
+				salida.put("mensaje", "Error en el registro de partes de PC");
 			} else {
-				salida.put("mensaje", "Registro exitoso con el Id: " + obj.getIdProducto());
+				salida.put("mensaje", "Registro exitoso con el Id: " + obj.getId_partes());
 			}
 		} catch (Exception e) {
 			salida.put("mensaje", "Error en el registro");
@@ -64,16 +60,16 @@ public class CrudProductoController {
 		return ResponseEntity.ok(salida);
 	}
 	
-	@PostMapping("/actualizaProducto")
+	@PostMapping("/actualizaPartesPC")
 	@ResponseBody
-	public ResponseEntity<Map<String, Object>> actualizaProducto(@RequestBody Producto obj){
+	public ResponseEntity<Map<String, Object>> actualizaPartesPC(@RequestBody PartesPC obj){
 		Map<String, Object> salida = new HashMap<>();
 		try {
-			Producto objSalida = productoService.insertaActualizaProducto(obj);
+			PartesPC objSalida = service.insertaActualizaPartesPC(obj);
 			if (objSalida == null) {
 				salida.put("mensaje", "Error al actualizar");
 			} else {
-				salida.put("mensaje", "Actualizacion exitoso con el Id: " + obj.getIdProducto());
+				salida.put("mensaje", "Actualizacion exitosa con el Id: " + obj.getId_partes());
 			}
 		} catch (Exception e) {
 			salida.put("mensaje", "Error al actualizar");
@@ -82,15 +78,15 @@ public class CrudProductoController {
 		return ResponseEntity.ok(salida);
 	}
 	
-	@DeleteMapping("/eliminaProducto/{id}")
+	@DeleteMapping("/eliminarPartesPC/{idpartes}")
 	@ResponseBody
-	public ResponseEntity<Map<String, Object>> elimina(@PathVariable("id")int id){
+	public ResponseEntity<Map<String, Object>> eliminaPartesPC(@PathVariable("idpartes")int idpartes){
 		Map<String, Object> salida = new HashMap<>();
 		try {
-			Optional<Producto> opt = productoService.buscaProducto(id);
+			Optional<PartesPC> opt = service.buscaPartes(idpartes);
 			if (opt.isPresent()) {
-				productoService.eliminarProducto(id);
-				Optional<Producto> optSalida = productoService.buscaProducto(id);
+				service.eliminarPartesPC(idpartes);
+				Optional<PartesPC> optSalida = service.buscaPartes(idpartes);
 				if (optSalida.isEmpty()) {
 					salida.put("mensaje", "Registro eliminado con exito");
 				}else {
@@ -99,11 +95,12 @@ public class CrudProductoController {
 			}else {
 				salida.put("mensaje", "No existe el id deseado");
 			}
+			
 		} catch (Exception e) {
-			e.printStackTrace();
 			salida.put("mensaje", "No se pudo eliminar el registro");
+			e.printStackTrace();
 		}
 		return ResponseEntity.ok(salida);
 	}
-	
+
 }
