@@ -105,4 +105,5 @@ public class CrudProductoController {
 		}
 		return ResponseEntity.ok(salida);
 	}
+	
 }
