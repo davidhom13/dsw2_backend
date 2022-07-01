@@ -18,11 +18,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.proyecto.entidad.PartesPC;
+import com.proyecto.entidad.TipoPartes;
 import com.proyecto.service.PartesPCService;
 import com.proyecto.util.AppSettings;
 
 @RestController
-@RequestMapping("url/crudPartesPC")
+@RequestMapping("/url/crudPartesPC")
 @CrossOrigin(origins = AppSettings.URL_CROSS_ORIGIN)
 public class CrudPartesPCController {
 	
