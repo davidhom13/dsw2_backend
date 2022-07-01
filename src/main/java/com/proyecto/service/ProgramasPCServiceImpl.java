@@ -3,41 +3,41 @@ package com.proyecto.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.proyecto.entidad.ProgramasPC;
+import com.proyecto.repository.ProgramasPCRepository;
 
 @Service
 public class ProgramasPCServiceImpl implements ProgramasPCService{
 
+	@Autowired
+	private ProgramasPCRepository repository;
+	
 	@Override
 	public List<ProgramasPC> listaProgramas() {
-		// TODO Auto-generated method stub
-		return null;
+		return repository.findAll();
 	}
 
 	@Override
-	public List<ProgramasPC> listaProgramasPorCategoria(String idCatePrograma) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<ProgramasPC> listaProgramasPorCategoria(int idCatePrograma) {
+		return repository.listaProgramasPorCategoria(idCatePrograma);
 	}
 
 	@Override
 	public ProgramasPC insertaActualizaProgramas(ProgramasPC obj) {
-		// TODO Auto-generated method stub
-		return null;
+		return repository.save(obj);
 	}
 
 	@Override
 	public void eliminarProgramas(int id_programa) {
-		// TODO Auto-generated method stub
-		
+		repository.deleteById(id_programa);
 	}
 
 	@Override
 	public Optional<ProgramasPC> buscaProgramas(int id_programa) {
-		// TODO Auto-generated method stub
-		return null;
+		return repository.findById(id_programa);
 	}
 
 }
