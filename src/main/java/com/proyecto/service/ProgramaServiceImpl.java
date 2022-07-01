@@ -23,10 +23,10 @@ public class ProgramaServiceImpl implements ProgramaService{
 	public  Programa insertaActualizaPrograma(Programa obj) {
 			return repository.save(obj);
 		}
-		@Override
+		/*@Override
 		public List<Programa> listaProgramaPorIdCategoriaNombrePrecio(int id_programa, int id_categoria, String nom_prog, String precio) {
 			return repository.listaProgramaPorIdCategoriaNombrePrecio(id_programa, id_categoria, nom_prog, precio);
-		}
+		}*/
 		@Override
 		public List<Programa> listaProgramaPorNombreLike(String nom_prog) {
 			return repository.listaProgramaPorNombreLike(nom_prog);
