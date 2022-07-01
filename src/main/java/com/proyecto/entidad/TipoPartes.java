@@ -18,6 +18,7 @@ public class TipoPartes {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id_tipopartes;
+	
 	private String desc_tipopartes;
 
 }
