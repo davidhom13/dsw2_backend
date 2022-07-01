@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.proyecto.entidad.PartesPC;
 import com.proyecto.entidad.ProgramasPC;
 import com.proyecto.service.ProgramasPCService;
 import com.proyecto.util.AppSettings;
