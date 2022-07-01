@@ -44,7 +44,7 @@ public class ProgramaController {
 	public  ResponseEntity<Map<String, Object>> insertaPrograma(@RequestBody Programa obj){
 		Map<String, Object> salida = new HashMap<>();
 		try {
-			Programa objSalida = programaService.InsertaActualizaPrograma(obj);
+			Programa objSalida = programaService.insertaActualizaPrograma(obj);
 			if (objSalida == null) {
 				salida.put("mensaje", Constantes.MENSAJE_REG_ERROR);
 			}else {
@@ -60,12 +60,12 @@ public class ProgramaController {
 	@ResponseBody
 	public ResponseEntity<Map<String, Object>> listaProgramaNombreDniUbigeo(
 			@RequestParam(name = "id_programa", required = false, defaultValue = "") int id_programa,
-			@RequestParam(name = "id_categoria", required = false, defaultValue = "") String id_categoria,
+			@RequestParam(name = "id_categoria", required = false, defaultValue = "") int id_categoria,
 			@RequestParam(name = "nom_prog", required = false, defaultValue = "") String nom_prog,
-			@RequestParam(name = "precio", required = false, defaultValue = "") int precio) {
+			@RequestParam(name = "precio", required = false, defaultValue = "") String precio) {
 		Map<String, Object> salida = new HashMap<>();
 		try {
-			List<Programa> lista = programaService.listaProgramaPorIdCategoriaNombrePrecio(id_programa, precio, nom_prog, id_categoria);
+			List<Programa> lista = programaService.listaProgramaPorIdCategoriaNombrePrecio(id_programa, id_categoria, nom_prog, precio);
 			if(CollectionUtils.isEmpty(lista)) {
 				salida.put("mensaje", "No existen datos para mostrar");
 			}else {

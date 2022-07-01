@@ -20,7 +20,7 @@ public class ProgramaServiceImpl implements ProgramaService{
 		return repository.findAll();
 	}
 		@Override
-	public  Programa InsertaActualizaPrograma(Programa obj) {
+	public  Programa insertaActualizaPrograma(Programa obj) {
 			return repository.save(obj);
 		}
 		@Override
@@ -41,5 +41,13 @@ public class ProgramaServiceImpl implements ProgramaService{
 		@Override
 		public Optional<Programa> buscaPrograma(int id_programa) {
 			return repository.findById(id_programa);
+		}
+		@Override
+		public List<Programa> listaProgramaPorId(String id_programa) {
+			return repository.listaProgramaPorId(id_programa);
+		}
+		@Override
+		public Programa RegistraPrograma(Programa obj) {
+			return repository.save(obj);
 		}
 }
