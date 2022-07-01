@@ -39,7 +39,17 @@ public class CrudPartesPCController {
 	@GetMapping("/listadoxTipo/{idtipo}")
 	@ResponseBody
 	public ResponseEntity<List<PartesPC>> listaxTipo(@PathVariable("idtipo")int idtipo){
-		return ResponseEntity.ok(service.listaPartesPorTipo(idtipo));
+		List<PartesPC> salida = null;
+		try {
+			if (idtipo==-1) {
+				salida = service.listaPartes();
+			} else {
+				salida = service.listaPartesPorTipo(idtipo);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return ResponseEntity.ok(salida);
 	}
 	
 	@PostMapping("/registroPartesPC")
